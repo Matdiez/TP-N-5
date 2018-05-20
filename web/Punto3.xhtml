@@ -8,10 +8,10 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <p:panel id="pnlImagen" header="Tabla de Imágenes" footer="PV 2018 - Punto 3">
-            <p:growl id="mensaje1" showDetail="true"/>
+        <p:panel id="pnlImagen" header="Tabla de Imágenes" footer="PV 2018 - [ Punto 3 ]">
+            <p:growl id="mensaje3" showDetail="true"/>
             <h:form id="frmCargaImagen" enctype="multipart/form-data">
-                <p:panelGrid id="tblCargaImagen" columns="2">
+                <h:panelGrid id="tblCargaImagen" columns="2">
                     <p:outputLabel for="fecha" 
                                    value="Fecha:"/>
                     <p:inputText id="fecha"
@@ -40,7 +40,7 @@
                                         cache="false"
                                         alt="Imagen no disponible"/>
                     </p:panel>
-                </p:panelGrid>
+                </h:panelGrid>
             </h:form>
             <h:form id="tblMuestraLista">
                 <p:dataTable id="dtTblImágenes" 

@@ -23,6 +23,15 @@ public class LibroFormBean {
     public LibroFormBean() {
         listadoLibro = new ListadoLibro();
     }
+    
+    public void agregarLibro() {
+        setUnLibro(new Libro(getIsbn(),getAutor(),getTítulo(),getPrecio()));
+        getListadoLibro().agregarLibros(getUnLibro());
+    }
+    
+    public void reiniciarLista() {
+        listadoLibro = new ListadoLibro();
+    }
 
     /**
      * @return the unLibro

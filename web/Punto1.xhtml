@@ -7,17 +7,17 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <p:panel id="pnlPalabras" header="Lista de Palabras" footer="PV 2018">
-            <p:growl id="mensaje"/> 
+        <p:panel id="pnlPalabras" header="Lista de Palabras" footer="PV 2018 - [ Punto 1 ]">
+            <p:growl id="mensaje1" showDetail="true"/> 
             <h:form id="frmPalabras">
-                <p:panelGrid id="tblPalabras" columns="2">
+                <h:panelGrid id="tblPalabras" columns="2">
                     <p:outputLabel for="txtPalabra" 
                                    value="Ingrese una Palabra:"/>
                     <p:inputText id="txtPalabra" 
                                  value="#{palabrasFormBean.palabra}" 
                                  required="true"/>
-                </p:panelGrid>
-                <p:panelGrid id="tblBotones" columns="1">
+                </h:panelGrid>
+                <h:panelGrid id="tblBotones1" columns="3">
                     <p:commandButton id="btnCargarPalabras" 
                                      value="Agregar a la Lista" 
                                      actionListener="#{palabrasFormBean.agregarPalabras()}" 
@@ -30,17 +30,17 @@
                                      value="Borrar el Listado" 
                                      actionListener="#{palabrasFormBean.reiniciarLista()}" 
                                      update="dtTblPalabras"/>
-                </p:panelGrid>
-                <p:panelGrid id="pnlMuestraPalabras" columns="1">
+                </h:panelGrid>
+                <h:panelGrid id="pnlMuestraPalabras" columns="1">
                     <p:dataTable id="dtTblPalabras" 
                                  value="#{palabrasFormBean.listadoPalabras.listaPalabras}" 
                                  var="cadPalabra" 
-                                 emptyMessage="No se cargó ninguna palabra">
+                                 emptyMessage="No se cargó ninguna palabra a la lista">
                         <p:column headerText="Palabras">
                             <p:outputLabel value="#{cadPalabra}"/>
                         </p:column>
                     </p:dataTable>
-                </p:panelGrid>
+                </h:panelGrid>
             </h:form>
         </p:panel>
     </h:body>
