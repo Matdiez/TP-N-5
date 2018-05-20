@@ -7,54 +7,148 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <p:panel id="pnlLibros" header="Lista de Libros" footer="PV 2018 - [ Punto 2 ]">
-            <p:growl id="mensaje2" showDetail="true"/>
-            <h:form id="frmLibros">
-                <h:panelGrid id="tblIngreso" columns="2">
+        <p:panel id="pnlAdministración" header="Administración de Libros">
+            <h:form id="frmAdministración" enctype="multipart/form-data">
+                <h:panelGrid id="tblAdministración" columns="1">
+                    <p:commandButton id="btnAgregarLibroAdmin"
+                                     value="Agregar Libro"
+                                     oncomplete="PF('agregarLibro').show()"
+                                     update=":frmAgregarLibro"/>
+                    <p:commandButton id="btnBuscarLibroAdmin"
+                                     value="Buscar Libro"
+                                     oncomplete="PF('buscarLibro').show()"
+                                     update=":frmBuscarLibro"/>
+                    <p:commandButton id="btnLimpiar"
+                                     value="Limpiar"
+                                     actionListener="#{libroFormBean.reiniciarLista()}"
+                                     update="pnlMuestraLibros"/>
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
+        <p:panel id="pnlMuestraLibros" header="Lista de Libros">
+            <h:form id="frmLibros" enctype="multipart/form-data">
+                <h:panelGrid columns="4">
+                    <p:dataTable id="dtTblMuestraLibros"
+                                 value="#{libroFormBean.listadoLibro.libros}"
+                                 var="cadaLibro"
+                                 emptyMessage="No se cargó ningún libro al listado">
+                        <p:column headerText="Título">
+                            <p:outputLabel value="#{cadaLibro.título}"/>
+                        </p:column>
+                        <p:column headerText="Autor">
+                            <p:outputLabel value="#{cadaLibro.autor}"/>
+                        </p:column>
+                        <p:column headerText="Precio">
+                            <p:outputLabel value="#{cadaLibro.precio}"/>
+                        </p:column>
+                        <p:column headerText="ISBN">
+                            <p:outputLabel value="#{cadaLibro.isbn}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
+        <p:dialog widgetVar="agregarLibro"
+                  header="Agregar Libro"
+                  resizable="false"
+                  showEffect="explode"
+                  hideEffect="explode"
+                  modal="true">
+            <h:form id="frmAgregarLibro">
+                <h:panelGrid columns="2">
+                    <p:outputLabel for="txtTítulo" 
+                                   value="Título:"/>
+                    <p:inputText id="txtTítulo"
+                                 value="#{libroFormBean.título}"
+                                 required="true"/>
                     <p:outputLabel for="txtAutor" 
                                    value="Autor:"/>
                     <p:inputText id="txtAutor"
                                  value="#{libroFormBean.autor}"
                                  required="true"/>
-                    <p:outputLabel for="txtIsbn" 
-                                   value="ISBN:"/>
-                    <p:inputText id="txtIsbn"
-                                 value="#{libroFormBean.isbn}"/>
-                    <p:outputLabel for="txtTítulo" 
-                                   value="Título:"/>
-                    <p:inputText id="txtTítulo"
-                                 value="#{libroFormBean.título}"/>
                     <p:outputLabel for="txtPrecio" 
                                    value="Precio:"/>
                     <p:inputText id="txtPrecio"
-                                 value="#{libroFormBean.precio}"/>
-                </h:panelGrid>
-                <h:panelGrid id="tblBotones2" columns="2">
+                                 value="#{libroFormBean.precio}"
+                                 required="true"/>
+                    <p:outputLabel for="txtISBN" 
+                                   value="ISBN:"/>
+                    <p:inputText id="txtISBN"
+                                 value="#{libroFormBean.isbn}"
+                                 required="true"/>
+                    <p:commandButton id="btnCerrarLibro"
+                                     value="Salir"
+                                     oncomplete="PF('agregarLibro').hide()"/>
                     <p:commandButton id="btnAgregarLibro"
-                                     value="Agregar Libro"
+                                     value="Agregar"
                                      actionListener="#{libroFormBean.agregarLibro()}"
-                                     update="dtTblLibros"/>
-                    <p:commandButton id="btnBorrarListadoLibro"
-                                     value="Limpiar"
-                                     actionListener="#{libroFormBean.reiniciarLista()}"
-                                     update="dtTblLibros"/>
+                                     oncomplete="PF('agregarLibro').hide()"
+                                     update=":pnlMuestraLibros">
+                        <p:confirm header="Pedido de Confirmación" 
+                                   message="¿Desea agregar el libro?"
+                                   icon="ui-icon-alert"/>
+                    </p:commandButton>
                 </h:panelGrid>
-                <h:panelGrid id="pnlMuestraLibros" columns="4">
-                    <p:dataTable id="dtTblLibros"
-                                 value="#{libroFormBean.listadoLibro.libros}"
-                                 var="cadaLibro"
-                                 emptyMessage="No se cargó ningún libro a la lista">
-                        <p:column headerText="Autor">
-                            <p:outputLabel value="#{cadaLibro.autor}"/>
-                        </p:column>
-                        <p:column headerText="ISBN">
-                            <p:outputLabel value="#{cadaLibro.isbn}"/>
-                        </p:column>
+            </h:form>
+        </p:dialog>
+        <p:confirmDialog id="cnfAgregarLibro" 
+                         global="true"
+                         showEffect="fade"
+                         hideEffect="fade">
+            <h:form id="frmConfirmaciónLibro">
+                <p:commandButton value="SI"
+                                 type="button"
+                                 styleClass="ui-confirmdialog-yes"
+                                 icon="ui-icon-check"/>
+                <p:commandButton value="NO"
+                                 type="button"
+                                 styleClass="ui-confirmdialog-no"
+                                 icon="ui-icon-close"
+                                 style="float: right;"/>
+            </h:form>
+        </p:confirmDialog>
+        <p:dialog widgetVar="buscarLibro"
+                  resizable="false"
+                  header="Buscar Libro"
+                  showEffect="explode"
+                  hideEffect="explode"
+                  modal="true">
+            <h:form id="frmBuscarLibro">
+                <h:panelGrid columns="2">
+                    <p:outputLabel for="txtBuscador"
+                                   value="Ingrese el título que desea buscar"/>
+                    <p:inputText id="txtBuscador"
+                                 value="#{libroFormBean.buscador}"
+                                 required="true"/>
+                    <p:commandButton id="btnCerrarLibro1" 
+                                     value="Salir"
+                                     oncomplete="PF('buscarLibro').hide()"/>
+                    <p:commandButton id="btnBuscarLibro"
+                                     value="Buscar"
+                                     actionListener="#{libroFormBean.buscarLibro()}"
+                                     oncomplete="PF('buscarLibro').hide()"
+                                     update=":pnlLibrosBuscados"/>
+                </h:panelGrid>
+            </h:form>          
+        </p:dialog>
+        <p:panel id="pnlLibrosBuscados" header="Libros Encontrados">
+            <h:form id="frmMuestraLibros" enctype="multipart/form-data">
+                <h:panelGrid columns="4">
+                    <p:dataTable id="dtTblMuestraLibrosBuscados"
+                                 value="#{libroFormBean.listadoLibro2.libros}"
+                                 var="cadaLibro1"
+                                 emptyMessage="No se encontró ningún libro">
                         <p:column headerText="Título">
-                            <p:outputLabel value="#{cadaLibro.título}"/>
+                            <p:outputLabel value="#{cadaLibro1.título}"/>
+                        </p:column>
+                        <p:column headerText="Autor">
+                            <p:outputLabel value="#{cadaLibro1.autor}"/>
                         </p:column>
                         <p:column headerText="Precio">
-                            <p:outputLabel value="#{cadaLibro.precio}"/>
+                            <p:outputLabel value="#{cadaLibro1.precio}"/>
+                        </p:column>
+                        <p:column headerText="ISBN">
+                            <p:outputLabel value="#{cadaLibro1.isbn}"/>
                         </p:column>
                     </p:dataTable>
                 </h:panelGrid>

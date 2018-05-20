@@ -15,13 +15,16 @@ public class LibroFormBean {
 
     private Libro unLibro;
     private ListadoLibro listadoLibro;
+    private ListadoLibro listadoLibro2;
     private String isbn;
     private String autor;
     private String título;
     private String precio;
+    private String buscador;
     
     public LibroFormBean() {
         listadoLibro = new ListadoLibro();
+        listadoLibro2 = new ListadoLibro();
     }
     
     public void agregarLibro() {
@@ -29,8 +32,17 @@ public class LibroFormBean {
         getListadoLibro().agregarLibros(getUnLibro());
     }
     
+    public void buscarLibro() {
+        for (int i=0;i<getListadoLibro().getLibros().size();i++) {
+            if (getListadoLibro().getLibros().get(i).getTítulo().equals(getBuscador())) {
+                getListadoLibro2().getLibros().add(getListadoLibro().getLibros().get(i));
+            }
+        }
+    }
+    
     public void reiniciarLista() {
         listadoLibro = new ListadoLibro();
+        listadoLibro2 = new ListadoLibro();
     }
 
     /**
@@ -115,6 +127,34 @@ public class LibroFormBean {
      */
     public void setPrecio(String precio) {
         this.precio = precio;
+    }
+
+    /**
+     * @return the listadoLibro2
+     */
+    public ListadoLibro getListadoLibro2() {
+        return listadoLibro2;
+    }
+
+    /**
+     * @param listadoLibro2 the listadoLibro2 to set
+     */
+    public void setListadoLibro2(ListadoLibro listadoLibro2) {
+        this.listadoLibro2 = listadoLibro2;
+    }
+
+    /**
+     * @return the buscador
+     */
+    public String getBuscador() {
+        return buscador;
+    }
+
+    /**
+     * @param buscador the buscador to set
+     */
+    public void setBuscador(String buscador) {
+        this.buscador = buscador;
     }
     
 }
